@@ -2,15 +2,22 @@ package main
 
 import (
 	"fmt"
+	"github.com/ozoncp/ocp-calendar-api/internal/entities"
 	"github.com/ozoncp/ocp-calendar-api/internal/utils"
+	"log"
+	"time"
 )
 
 func main() {
-	fmt.Println("1. Chunked:\t", utils.SplitSlice([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 11}, 3))
-	fmt.Println("2. Swapped:\t", utils.SwapKeyValue(map[int]int{
-		0: 1,
-		1: 2,
-		2: 3,
-	}))
-	fmt.Println("3. Filtered:\t", utils.PickUnique([]int{1, 2, 3, 5}, map[int]int{1: 1, 3: 1}))
+	if err := utils.ReadConfig("./common.cfg"); err != nil {
+		log.Printf("config file can't be open: %v", err)
+	}
+	fmt.Println((entities.Calendar{
+		Id:        1,
+		UserId:    1,
+		Name:      "Calendar for user #1",
+		Events:    nil,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}).ToJson())
 }
