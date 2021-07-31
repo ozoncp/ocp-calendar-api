@@ -1,9 +1,11 @@
 package utils
 
-import "github.com/ozoncp/ocp-calendar-api/internal/entities"
+import (
+	"github.com/ozoncp/ocp-calendar-api/app/models"
+)
 
-func MapIdentifiers(items []entities.Calendar) map[uint64]entities.Calendar {
-	mappedEntities := map[uint64]entities.Calendar{}
+func MapIdentifiers(items []models.Calendar) map[uint64]models.Calendar {
+	mappedEntities := map[uint64]models.Calendar{}
 
 	for _, calendar := range items {
 		mappedEntities[calendar.Id] = calendar

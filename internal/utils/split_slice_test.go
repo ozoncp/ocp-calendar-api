@@ -1,32 +1,32 @@
 package utils
 
 import (
-	"github.com/ozoncp/ocp-calendar-api/internal/entities"
+	"github.com/ozoncp/ocp-calendar-api/app/models"
 	"testing"
 )
 
 func TestSplitSlice(t *testing.T) {
 	chunkSize := 3
-	calendarSlice := []entities.Calendar{{
-		Id:        0,
-		UserId:    0,
-		Type: 1,
-		Link: "https://some.io/event/1",
+	calendarSlice := []models.Calendar{{
+		Id:     0,
+		UserId: 0,
+		Type:   1,
+		Link:   "https://some.io/event/1",
 	}, {
-		Id:        0,
-		UserId:    0,
-		Type: 1,
-		Link: "https://some.io/event/1",
+		Id:     0,
+		UserId: 0,
+		Type:   1,
+		Link:   "https://some.io/event/1",
 	}, {
-		Id:        0,
-		UserId:    0,
-		Type: 1,
-		Link: "https://some.io/event/1",
+		Id:     0,
+		UserId: 0,
+		Type:   1,
+		Link:   "https://some.io/event/1",
 	}, {
-		Id:        0,
-		UserId:    0,
-		Type: 1,
-		Link: "https://some.io/event/1",
+		Id:     0,
+		UserId: 0,
+		Type:   1,
+		Link:   "https://some.io/event/1",
 	}}
 	chunks := SplitSlice(calendarSlice, chunkSize)
 

@@ -1,21 +1,21 @@
 package utils
 
 import (
-	"github.com/ozoncp/ocp-calendar-api/internal/entities"
+	"github.com/ozoncp/ocp-calendar-api/app/models"
 	"testing"
 )
 
 func TestMapIdentifiers(t *testing.T) {
-	items := []entities.Calendar{{
-		Id:        1,
-		UserId:    1,
-		Type: 1,
-		Link: "https://some.io/event/1",
+	items := []models.Calendar{{
+		Id:     1,
+		UserId: 1,
+		Type:   1,
+		Link:   "https://some.io/event/1",
 	}, {
-		Id:        2,
-		UserId:    2,
-		Type: 2,
-		Link: "https://some.io/event/2",
+		Id:     2,
+		UserId: 2,
+		Type:   2,
+		Link:   "https://some.io/event/2",
 	}}
 	mappedItems := MapIdentifiers(items)
 
