@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/ozoncp/ocp-calendar-api/internal/entities"
+	"github.com/ozoncp/ocp-calendar-api/app/models"
 	"math"
 )
 
@@ -14,8 +14,8 @@ func minCapacity(capacity1, capacity2 int) int {
 	return int(math.Min(float64(capacity1), float64(capacity2)))
 }
 
-func SplitSlice(items []entities.Calendar, chunkSize int) [][]entities.Calendar {
-	var targetSlice [][]entities.Calendar
+func SplitSlice(items []models.Calendar, chunkSize int) [][]models.Calendar {
+	var targetSlice [][]models.Calendar
 
 	expectedCapacity := expectedSliceCapacity(len(items), chunkSize)
 	sourceSliceCapacity := cap(items)
@@ -27,4 +27,3 @@ func SplitSlice(items []entities.Calendar, chunkSize int) [][]entities.Calendar 
 
 	return targetSlice
 }
-

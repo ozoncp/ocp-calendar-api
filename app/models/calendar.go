@@ -1,4 +1,4 @@
-package entities
+package models
 
 import (
 	"encoding/json"
@@ -11,7 +11,7 @@ type Calendar struct {
 	Link   string `json:"link"`
 }
 
-func (calendar Calendar) ToJson() (string, error) {
+func (calendar Calendar) String() (string, error) {
 	result, err := json.MarshalIndent(calendar, "", "    ")
 	return string(result), err
 }
