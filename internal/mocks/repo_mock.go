@@ -77,17 +77,3 @@ func (mr *MockRepoMockRecorder) ListCalendars(arg0, arg1 interface{}) *gomock.Ca
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListCalendars", reflect.TypeOf((*MockRepo)(nil).ListCalendars), arg0, arg1)
 }
-
-// RemoveCalendar mocks base method.
-func (m *MockRepo) RemoveCalendar(arg0 uint64) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RemoveCalendar", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// RemoveCalendar indicates an expected call of RemoveCalendar.
-func (mr *MockRepoMockRecorder) RemoveCalendar(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveCalendar", reflect.TypeOf((*MockRepo)(nil).RemoveCalendar), arg0)
-}
