@@ -11,9 +11,9 @@ import (
 
 var _ = Describe("Saver", func() {
 	var (
-		ctrl     *gomock.Controller
+		ctrl        *gomock.Controller
 		mockFlusher *mocks.MockFlusher
-		s saver.Saver
+		s           saver.Saver
 	)
 
 	BeforeEach(func() {

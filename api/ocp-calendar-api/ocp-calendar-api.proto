@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+
+package ocp_calendar_api;
+
+option go_package = "github.com/ozoncp/ocp-calendar-api;ocp_calendar_api";
+
+service OcpCalendarApi {
+    // Добаляет новый календарь
+    rpc CreateCalendarV1(CreateCalendarRequestV1) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/calendar"
+        };
+    }
+
+    // Возвращает данные календаря по запроешенному ID
+    rpc DescribeCalendarV1(DescribeCalendarRequestV1) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            get: "/v1/calendar/{Id}"
+        };
+    }
+
+    // Вернет список календарей
+    rpc ListCalendarsV1(ListCalendarRequestV1) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            get: "/v1/calendars"
+        };
+    }
+
+    // Удалеет календарь по запрошенному ID
+    rpc RemoveCalendarV1(RemoveCalendarRequestV1) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/calendar/{Id}"
+        };
+    }
+}
+
+message CreateCalendarRequestV1 {
+    uint64 Id = 1;
+    uint64 UserId = 2;
+    uint64 Type = 3;
+    string Link = 4;
+}
+
+message DescribeCalendarRequestV1 {
+    uint64 Id = 1;
+}
+
+message ListCalendarRequestV1 {
+    uint64 Limit = 1;
+    uint64 Offset = 2;
+    uint64 UserId = 3;
+    uint64 Type = 4;
+}
+
+message RemoveCalendarRequestV1 {
+    uint64 Id = 1;
+}
