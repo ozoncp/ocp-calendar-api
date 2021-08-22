@@ -1,4 +1,4 @@
-package ocp_calendar_api
+package api
 
 import (
 	"context"
@@ -7,7 +7,12 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-func (a *OcpCalendarApi) RemoveCalendarV1(ctx context.Context, req *desc.RemoveCalendarRequestV1) (*emptypb.Empty, error) {
+func (a *OcpCalendarApi) RemoveCalendarV1(
+	ctx context.Context,
+	req *desc.RemoveCalendarRequestV1,
+) (*emptypb.Empty, error) {
+	err := a.repo.RemoveCalendar(ctx, req.Id)
 	log.Info().Msgf("Remove calendar attempt with ID: %d", req.Id)
-	return &emptypb.Empty{}, nil
+
+	return &emptypb.Empty{}, err
 }

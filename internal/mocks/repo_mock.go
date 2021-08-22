@@ -5,10 +5,11 @@
 package mocks
 
 import (
+	context "context"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	models "github.com/ozoncp/ocp-calendar-api/app/models"
+	models "github.com/ozoncp/ocp-calendar-api/internal/app/models"
 )
 
 // MockRepo is a mock of Repo interface.
@@ -35,45 +36,59 @@ func (m *MockRepo) EXPECT() *MockRepoMockRecorder {
 }
 
 // AddCalendars mocks base method.
-func (m *MockRepo) AddCalendars(arg0 []models.Calendar) error {
+func (m *MockRepo) AddCalendars(arg0 context.Context, arg1 []models.Calendar) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddCalendars", arg0)
+	ret := m.ctrl.Call(m, "AddCalendars", arg0, arg1)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // AddCalendars indicates an expected call of AddCalendars.
-func (mr *MockRepoMockRecorder) AddCalendars(arg0 interface{}) *gomock.Call {
+func (mr *MockRepoMockRecorder) AddCalendars(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddCalendars", reflect.TypeOf((*MockRepo)(nil).AddCalendars), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddCalendars", reflect.TypeOf((*MockRepo)(nil).AddCalendars), arg0, arg1)
 }
 
 // DescribeCalendar mocks base method.
-func (m *MockRepo) DescribeCalendar(arg0 uint64) (models.Calendar, error) {
+func (m *MockRepo) DescribeCalendar(arg0 context.Context, arg1 uint64) (models.Calendar, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DescribeCalendar", arg0)
+	ret := m.ctrl.Call(m, "DescribeCalendar", arg0, arg1)
 	ret0, _ := ret[0].(models.Calendar)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // DescribeCalendar indicates an expected call of DescribeCalendar.
-func (mr *MockRepoMockRecorder) DescribeCalendar(arg0 interface{}) *gomock.Call {
+func (mr *MockRepoMockRecorder) DescribeCalendar(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeCalendar", reflect.TypeOf((*MockRepo)(nil).DescribeCalendar), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeCalendar", reflect.TypeOf((*MockRepo)(nil).DescribeCalendar), arg0, arg1)
 }
 
 // ListCalendars mocks base method.
-func (m *MockRepo) ListCalendars(arg0, arg1 uint64) ([]models.Calendar, error) {
+func (m *MockRepo) ListCalendars(arg0 context.Context, arg1, arg2, arg3, arg4 uint64) ([]models.Calendar, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListCalendars", arg0, arg1)
+	ret := m.ctrl.Call(m, "ListCalendars", arg0, arg1, arg2, arg3, arg4)
 	ret0, _ := ret[0].([]models.Calendar)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // ListCalendars indicates an expected call of ListCalendars.
-func (mr *MockRepoMockRecorder) ListCalendars(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockRepoMockRecorder) ListCalendars(arg0, arg1, arg2, arg3, arg4 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListCalendars", reflect.TypeOf((*MockRepo)(nil).ListCalendars), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListCalendars", reflect.TypeOf((*MockRepo)(nil).ListCalendars), arg0, arg1, arg2, arg3, arg4)
+}
+
+// RemoveCalendar mocks base method.
+func (m *MockRepo) RemoveCalendar(arg0 context.Context, arg1 uint64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RemoveCalendar", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RemoveCalendar indicates an expected call of RemoveCalendar.
+func (mr *MockRepoMockRecorder) RemoveCalendar(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveCalendar", reflect.TypeOf((*MockRepo)(nil).RemoveCalendar), arg0, arg1)
 }

@@ -1,7 +1,7 @@
 package saver
 
 import (
-	"github.com/ozoncp/ocp-calendar-api/app/models"
+	"github.com/ozoncp/ocp-calendar-api/internal/app/models"
 	"github.com/ozoncp/ocp-calendar-api/internal/flusher"
 	"time"
 )

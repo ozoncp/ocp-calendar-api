@@ -19,9 +19,13 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OcpCalendarApiClient interface {
+	// Добаляет новый календарь
 	CreateCalendarV1(ctx context.Context, in *CreateCalendarRequestV1, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	DescribeCalendarV1(ctx context.Context, in *DescribeCalendarRequestV1, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	ListCalendarsV1(ctx context.Context, in *ListCalendarRequestV1, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Возвращает данные календаря по запроешенному ID
+	DescribeCalendarV1(ctx context.Context, in *DescribeCalendarRequestV1, opts ...grpc.CallOption) (*DescribeCalendarResponseV1, error)
+	// Вернет список календарей
+	ListCalendarsV1(ctx context.Context, in *ListCalendarRequestV1, opts ...grpc.CallOption) (*ListCalendarResponseV1, error)
+	// Удалеет календарь по запрошенному ID
 	RemoveCalendarV1(ctx context.Context, in *RemoveCalendarRequestV1, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
@@ -42,8 +46,8 @@ func (c *ocpCalendarApiClient) CreateCalendarV1(ctx context.Context, in *CreateC
 	return out, nil
 }
 
-func (c *ocpCalendarApiClient) DescribeCalendarV1(ctx context.Context, in *DescribeCalendarRequestV1, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *ocpCalendarApiClient) DescribeCalendarV1(ctx context.Context, in *DescribeCalendarRequestV1, opts ...grpc.CallOption) (*DescribeCalendarResponseV1, error) {
+	out := new(DescribeCalendarResponseV1)
 	err := c.cc.Invoke(ctx, "/ocp_calendar_api.OcpCalendarApi/DescribeCalendarV1", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -51,8 +55,8 @@ func (c *ocpCalendarApiClient) DescribeCalendarV1(ctx context.Context, in *Descr
 	return out, nil
 }
 
-func (c *ocpCalendarApiClient) ListCalendarsV1(ctx context.Context, in *ListCalendarRequestV1, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *ocpCalendarApiClient) ListCalendarsV1(ctx context.Context, in *ListCalendarRequestV1, opts ...grpc.CallOption) (*ListCalendarResponseV1, error) {
+	out := new(ListCalendarResponseV1)
 	err := c.cc.Invoke(ctx, "/ocp_calendar_api.OcpCalendarApi/ListCalendarsV1", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -73,9 +77,13 @@ func (c *ocpCalendarApiClient) RemoveCalendarV1(ctx context.Context, in *RemoveC
 // All implementations must embed UnimplementedOcpCalendarApiServer
 // for forward compatibility
 type OcpCalendarApiServer interface {
+	// Добаляет новый календарь
 	CreateCalendarV1(context.Context, *CreateCalendarRequestV1) (*emptypb.Empty, error)
-	DescribeCalendarV1(context.Context, *DescribeCalendarRequestV1) (*emptypb.Empty, error)
-	ListCalendarsV1(context.Context, *ListCalendarRequestV1) (*emptypb.Empty, error)
+	// Возвращает данные календаря по запроешенному ID
+	DescribeCalendarV1(context.Context, *DescribeCalendarRequestV1) (*DescribeCalendarResponseV1, error)
+	// Вернет список календарей
+	ListCalendarsV1(context.Context, *ListCalendarRequestV1) (*ListCalendarResponseV1, error)
+	// Удалеет календарь по запрошенному ID
 	RemoveCalendarV1(context.Context, *RemoveCalendarRequestV1) (*emptypb.Empty, error)
 	mustEmbedUnimplementedOcpCalendarApiServer()
 }
@@ -87,10 +95,10 @@ type UnimplementedOcpCalendarApiServer struct {
 func (UnimplementedOcpCalendarApiServer) CreateCalendarV1(context.Context, *CreateCalendarRequestV1) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCalendarV1 not implemented")
 }
-func (UnimplementedOcpCalendarApiServer) DescribeCalendarV1(context.Context, *DescribeCalendarRequestV1) (*emptypb.Empty, error) {
+func (UnimplementedOcpCalendarApiServer) DescribeCalendarV1(context.Context, *DescribeCalendarRequestV1) (*DescribeCalendarResponseV1, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeCalendarV1 not implemented")
 }
-func (UnimplementedOcpCalendarApiServer) ListCalendarsV1(context.Context, *ListCalendarRequestV1) (*emptypb.Empty, error) {
+func (UnimplementedOcpCalendarApiServer) ListCalendarsV1(context.Context, *ListCalendarRequestV1) (*ListCalendarResponseV1, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCalendarsV1 not implemented")
 }
 func (UnimplementedOcpCalendarApiServer) RemoveCalendarV1(context.Context, *RemoveCalendarRequestV1) (*emptypb.Empty, error) {

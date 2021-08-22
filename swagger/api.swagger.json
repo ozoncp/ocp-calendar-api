@@ -13,6 +13,7 @@
   "paths": {
     "/v1/calendar": {
       "post": {
+        "summary": "Добаляет новый календарь",
         "operationId": "OcpCalendarApi_CreateCalendarV1",
         "responses": {
           "200": {
@@ -28,6 +29,16 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ocp_calendar_apiCreateCalendarRequestV1"
+            }
+          }
+        ],
         "tags": [
           "OcpCalendarApi"
         ]
@@ -35,12 +46,13 @@
     },
     "/v1/calendar/{Id}": {
       "get": {
+        "summary": "Возвращает данные календаря по запроешенному ID",
         "operationId": "OcpCalendarApi_DescribeCalendarV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "properties": {}
+              "$ref": "#/definitions/ocp_calendar_apiDescribeCalendarResponseV1"
             }
           },
           "default": {
@@ -64,6 +76,7 @@
         ]
       },
       "delete": {
+        "summary": "Удалеет календарь по запрошенному ID",
         "operationId": "OcpCalendarApi_RemoveCalendarV1",
         "responses": {
           "200": {
@@ -95,12 +108,13 @@
     },
     "/v1/calendars": {
       "get": {
+        "summary": "Вернет список календарей",
         "operationId": "OcpCalendarApi_ListCalendarsV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "properties": {}
+              "$ref": "#/definitions/ocp_calendar_apiListCalendarResponseV1"
             }
           },
           "default": {
@@ -147,6 +161,53 @@
     }
   },
   "definitions": {
+    "ocp_calendar_apiCreateCalendarRequestV1": {
+      "type": "object",
+      "properties": {
+        "UserId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "Type": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "Link": {
+          "type": "string"
+        }
+      }
+    },
+    "ocp_calendar_apiDescribeCalendarResponseV1": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "UserId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "Type": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "Link": {
+          "type": "string"
+        }
+      }
+    },
+    "ocp_calendar_apiListCalendarResponseV1": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ocp_calendar_apiDescribeCalendarResponseV1"
+          }
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {

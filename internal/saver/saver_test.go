@@ -3,7 +3,7 @@ package saver_test
 import (
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
-	"github.com/ozoncp/ocp-calendar-api/app/models"
+	"github.com/ozoncp/ocp-calendar-api/internal/app/models"
 	"github.com/ozoncp/ocp-calendar-api/internal/mocks"
 	"github.com/ozoncp/ocp-calendar-api/internal/saver"
 	"time"

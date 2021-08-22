@@ -14,7 +14,7 @@ build: vendor-proto .generate .build
 				--validate_out lang=go:pkg/ocp-calendar-api \
 				--swagger_out=allow_merge=true,merge_file_name=api:swagger \
 				api/ocp-calendar-api/ocp-calendar-api.proto
-		mv pkg/ocp-calendar-api/github.com/ozoncp/ocp-calendar-api/* pkg/ocp-calendar-api/
+		mv pkg/ocp-calendar-api/github.com/ozoncp/api/* pkg/ocp-calendar-api/
 		rm -rf pkg/ocp-calendar-api/github.com
 		mkdir -p cmd/ocp-calendar-api
 

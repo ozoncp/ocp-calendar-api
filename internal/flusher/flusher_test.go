@@ -1,9 +1,10 @@
 package flusher_test
 
 import (
+	"context"
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
-	"github.com/ozoncp/ocp-calendar-api/app/models"
+	"github.com/ozoncp/ocp-calendar-api/internal/app/models"
 	. "github.com/ozoncp/ocp-calendar-api/internal/flusher"
 	"github.com/ozoncp/ocp-calendar-api/internal/mocks"
 )
@@ -18,7 +19,11 @@ var _ = Describe("Flusher", func() {
 	BeforeEach(func() {
 		ctrl = gomock.NewController(GinkgoT())
 		mockRepo = mocks.NewMockRepo(ctrl)
-		flusher = NewFlusher(1, mockRepo)
+		flusher = NewFlusher(
+			context.Background(),
+			1,
+			mockRepo,
+		)
 	})
 
 	AfterEach(func() {
@@ -28,7 +33,7 @@ var _ = Describe("Flusher", func() {
 	Context("", func() {
 		It("should split to chunks and flush calendars entities collection", func() {
 			mockRepo.EXPECT().
-				AddCalendars(gomock.Any()).
+				AddCalendars(gomock.Any(), gomock.Any()).
 				Times(2).
 				Return(nil)
 

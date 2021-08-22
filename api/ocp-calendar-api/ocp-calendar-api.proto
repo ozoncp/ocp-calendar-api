@@ -2,28 +2,30 @@ syntax = "proto3";
 
 import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
 
 package ocp_calendar_api;
 
-option go_package = "github.com/ozoncp/ocp-calendar-api;ocp_calendar_api";
+option go_package = "github.com/ozoncp/api;ocp_calendar_api";
 
 service OcpCalendarApi {
     // Добаляет новый календарь
     rpc CreateCalendarV1(CreateCalendarRequestV1) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            post: "/v1/calendar"
+            post: "/v1/calendar",
+            body: "*"
         };
     }
 
     // Возвращает данные календаря по запроешенному ID
-    rpc DescribeCalendarV1(DescribeCalendarRequestV1) returns (google.protobuf.Empty) {
+    rpc DescribeCalendarV1(DescribeCalendarRequestV1) returns (DescribeCalendarResponseV1) {
         option (google.api.http) = {
             get: "/v1/calendar/{Id}"
         };
     }
 
     // Вернет список календарей
-    rpc ListCalendarsV1(ListCalendarRequestV1) returns (google.protobuf.Empty) {
+    rpc ListCalendarsV1(ListCalendarRequestV1) returns (ListCalendarResponseV1) {
         option (google.api.http) = {
             get: "/v1/calendars"
         };
@@ -38,14 +40,20 @@ service OcpCalendarApi {
 }
 
 message CreateCalendarRequestV1 {
-    uint64 Id = 1;
-    uint64 UserId = 2;
-    uint64 Type = 3;
-    string Link = 4;
+    uint64 UserId = 1 [(validate.rules).uint64.gt = 0];
+    uint64 Type = 2 [(validate.rules).uint64.gt = 0];
+    string Link = 3;
 }
 
 message DescribeCalendarRequestV1 {
     uint64 Id = 1;
+}
+
+message DescribeCalendarResponseV1 {
+    uint64 Id = 1;
+    uint64 UserId = 2;
+    uint64 Type = 3;
+    string Link = 4;
 }
 
 message ListCalendarRequestV1 {
@@ -53,6 +61,10 @@ message ListCalendarRequestV1 {
     uint64 Offset = 2;
     uint64 UserId = 3;
     uint64 Type = 4;
+}
+
+message ListCalendarResponseV1 {
+    repeated DescribeCalendarResponseV1 items = 1;
 }
 
 message RemoveCalendarRequestV1 {

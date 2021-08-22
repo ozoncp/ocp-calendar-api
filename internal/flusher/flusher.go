@@ -1,7 +1,8 @@
 package flusher
 
 import (
-	"github.com/ozoncp/ocp-calendar-api/app/models"
+	"context"
+	"github.com/ozoncp/ocp-calendar-api/internal/app/models"
 	"github.com/ozoncp/ocp-calendar-api/internal/repo"
 	"github.com/ozoncp/ocp-calendar-api/internal/utils"
 )
@@ -13,11 +14,12 @@ type Flusher interface {
 type flusher struct {
 	chunkSize    int
 	calendarRepo repo.Repo
+	ctx context.Context
 }
 
 func (f *flusher) Flush(calendars []models.Calendar) []models.Calendar {
 	for _, calendarsChunk := range utils.SplitSlice(calendars, f.chunkSize) {
-		if err := f.calendarRepo.AddCalendars(calendarsChunk); err != nil {
+		if err := f.calendarRepo.AddCalendars(f.ctx, calendarsChunk); err != nil {
 			panic(err)
 		}
 	}
@@ -25,9 +27,10 @@ func (f *flusher) Flush(calendars []models.Calendar) []models.Calendar {
 	return make([]models.Calendar, 0)
 }
 
-func NewFlusher(chunkSize int, repo repo.Repo) Flusher {
+func NewFlusher(ctx context.Context, chunkSize int, repo repo.Repo) Flusher {
 	return &flusher{
 		chunkSize:    chunkSize,
 		calendarRepo: repo,
+		ctx: ctx,
 	}
 }

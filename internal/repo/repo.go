@@ -1,9 +1,13 @@
 package repo
 
-import "github.com/ozoncp/ocp-calendar-api/app/models"
+import (
+	"context"
+	"github.com/ozoncp/ocp-calendar-api/internal/app/models"
+)
 
 type Repo interface {
-	AddCalendars(calendar []models.Calendar) error
-	ListCalendars(limit, offset uint64) ([]models.Calendar, error)
-	DescribeCalendar(calendarId uint64) (models.Calendar, error)
+	AddCalendars(ctx context.Context, calendars []models.Calendar) error
+	ListCalendars(ctx context.Context, limit, offset, userId, calendarType uint64) ([]models.Calendar, error)
+	DescribeCalendar(ctx context.Context, calendarId uint64) (models.Calendar, error)
+	RemoveCalendar(ctx context.Context, calendarId uint64) error
 }

@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	api "github.com/ozoncp/ocp-calendar-api/app/ocp-calendar-api"
+	api "github.com/ozoncp/ocp-calendar-api/internal/app/api"
+	"github.com/ozoncp/ocp-calendar-api/internal/pkg/db"
+	"github.com/ozoncp/ocp-calendar-api/internal/repo"
 	desc "github.com/ozoncp/ocp-calendar-api/pkg/ocp-calendar-api"
 	"google.golang.org/grpc"
 	"log"
@@ -16,14 +19,14 @@ const (
 	grpcServerEndpoint = "127.0.0.1:82"
 )
 
-func run() error {
+func run(dbConnection *sql.DB) error {
 	listen, err := net.Listen("tcp", grpcPort)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	s := grpc.NewServer()
-	desc.RegisterOcpCalendarApiServer(s, api.NewOcpCalendarApi())
+	s := grpc.NewServer(grpc.ChainUnaryInterceptor(db.NewInterceptorWithDB(dbConnection)))
+	desc.RegisterOcpCalendarApiServer(s, api.NewOcpCalendarApi(repo.NewCalendarRepository()))
 
 	if err := s.Serve(listen); err != nil {
 		log.Fatalf("failed to serve: %v", err)
@@ -32,8 +35,7 @@ func run() error {
 	return nil
 }
 
-func runJSON() {
-	ctx := context.Background()
+func runJSON(ctx context.Context) {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
@@ -54,9 +56,12 @@ func runJSON() {
 }
 
 func main() {
-	go runJSON()
+	ctx := context.Background()
+	dbConnection := db.Connect("postgres://postgres@localhost:5432/postgres?sslmode=disable")
 
-	if err := run(); err != nil {
+	go runJSON(ctx)
+
+	if err := run(dbConnection); err != nil {
 		log.Fatal(err)
 	}
 }
