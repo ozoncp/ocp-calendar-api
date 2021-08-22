@@ -16,10 +16,10 @@ func (a *OcpCalendarApi) ListCalendarsV1(
 
 	for _, calendar := range calendars {
 		response.Items = append(response.Items, &desc.DescribeCalendarResponseV1{
-			Id: calendar.Id,
+			Id:     calendar.Id,
 			UserId: calendar.UserId,
-			Type: calendar.Type,
-			Link: calendar.Link,
+			Type:   calendar.Type,
+			Link:   calendar.Link,
 		})
 	}
 

@@ -76,7 +76,7 @@ var _ = Describe("Api", func() {
 				Times(0)
 
 			res, err := client.CreateCalendarV1(ctx, &desc.CreateCalendarRequestV1{
-				Link:   "Ha-Ha",
+				Link: "Ha-Ha",
 			})
 
 			gomega.Expect(res).Should(gomega.BeNil())
@@ -144,13 +144,13 @@ var _ = Describe("Api", func() {
 		It("should return list of calendars", func() {
 			mockRepo.EXPECT().
 				ListCalendars(
-				gomock.Any(),
-				gomock.Any(),
-				gomock.Any(),
-				gomock.Any(),
-				gomock.Any(),
-			).Times(1)
-			
+					gomock.Any(),
+					gomock.Any(),
+					gomock.Any(),
+					gomock.Any(),
+					gomock.Any(),
+				).Times(1)
+
 			_, err := client.ListCalendarsV1(ctx, &desc.ListCalendarRequestV1{
 				Limit:  0,
 				Offset: 0,

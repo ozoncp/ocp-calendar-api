@@ -9,7 +9,7 @@ import (
 
 var tableName = "calendars"
 
-type CalendarRepository struct {}
+type CalendarRepository struct{}
 
 func (c CalendarRepository) RemoveCalendar(ctx context.Context, calendarId uint64) error {
 	_, err := sq.Delete(tableName).

@@ -33,6 +33,6 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 COPY --from=builder /home/developer/go/src/github.com/ozoncp/ocp-calendar-api/bin/ocp-calendar-api .
-RUN chown root:root api
+RUN chown root:root ocp-calendar-api
 EXPOSE 82
 CMD ["./ocp-calendar-api"]

@@ -25,9 +25,9 @@ func (a *OcpCalendarApi) DescribeCalendarV1(
 	}
 
 	return &desc.DescribeCalendarResponseV1{
-		Id: calendar.Id,
+		Id:     calendar.Id,
 		UserId: calendar.UserId,
-		Type: calendar.Type,
-		Link: calendar.Link,
+		Type:   calendar.Type,
+		Link:   calendar.Link,
 	}, err
 }

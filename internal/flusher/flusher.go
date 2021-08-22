@@ -14,7 +14,7 @@ type Flusher interface {
 type flusher struct {
 	chunkSize    int
 	calendarRepo repo.Repo
-	ctx context.Context
+	ctx          context.Context
 }
 
 func (f *flusher) Flush(calendars []models.Calendar) []models.Calendar {
@@ -31,6 +31,6 @@ func NewFlusher(ctx context.Context, chunkSize int, repo repo.Repo) Flusher {
 	return &flusher{
 		chunkSize:    chunkSize,
 		calendarRepo: repo,
-		ctx: ctx,
+		ctx:          ctx,
 	}
 }
