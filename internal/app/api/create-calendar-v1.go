@@ -14,17 +14,21 @@ func (a *OcpCalendarApi) CreateCalendarV1(
 	ctx context.Context,
 	req *desc.CreateCalendarRequestV1,
 ) (*emptypb.Empty, error) {
+	calendar := models.Calendar{
+		UserId: req.UserId,
+		Type:   req.Type,
+		Link:   req.Link,
+	}
+	msg, err := PrepareMessage("CreateCalendar", []models.Calendar{calendar})
+
 	if err := req.Validate(); err != nil {
 		return &emptypb.Empty{}, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	err := a.repo.AddCalendars(ctx, []models.Calendar{{
-		0,
-		req.UserId,
-		req.Type,
-		req.Link,
-	}})
-	log.Info().Msg("Create calendar attempt.")
+	err = a.repo.AddCalendars(ctx, []models.Calendar{calendar})
+	log.Info().Msg("Create calendar.")
+	_, _, err = a.producer.SendMessage(msg)
+	CreateCalendarCounter.WithLabelValues(SuccessLabelValue).Inc()
 
 	return &emptypb.Empty{}, err
 }

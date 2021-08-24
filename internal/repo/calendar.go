@@ -11,6 +11,27 @@ var tableName = "calendars"
 
 type CalendarRepository struct{}
 
+func (c CalendarRepository) UpdateCalendar(ctx context.Context, calendar models.Calendar) (models.Calendar, error) {
+	if _, err := c.DescribeCalendar(ctx, calendar.Id); err != nil {
+		return calendar, err
+	}
+
+	_, err := sq.Update(tableName).
+		Set("UserId", calendar.UserId).
+		Set("Type", calendar.Type).
+		Set("Link", calendar.Link).
+		Where("Id = ?", calendar.Id).
+		PlaceholderFormat(sq.Dollar).
+		RunWith(db.GetDB(ctx)).
+		ExecContext(ctx)
+
+	if err != nil {
+		return calendar, err
+	}
+
+	return calendar, nil
+}
+
 func (c CalendarRepository) RemoveCalendar(ctx context.Context, calendarId uint64) error {
 	_, err := sq.Delete(tableName).
 		Where("Id = ?", calendarId).
