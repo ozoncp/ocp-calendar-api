@@ -1,7 +1,7 @@
 package saver
 
 import (
-	"github.com/ozoncp/ocp-calendar-api/app/models"
+	"github.com/ozoncp/ocp-calendar-api/internal/app/models"
 	"github.com/ozoncp/ocp-calendar-api/internal/flusher"
 	"time"
 )
@@ -36,7 +36,7 @@ func (s *saver) Close() {
 	}
 }
 
-func (s *saver) Init()  {
+func (s *saver) Init() {
 	ticker := time.NewTicker(SaveDelay)
 	defer ticker.Stop()
 
@@ -61,7 +61,7 @@ func (s *saver) Init()  {
 func NewSaver(capacity uint, flusher flusher.Flusher) Saver {
 	saverInstance := saver{
 		buffer:  make([]models.Calendar, 0, capacity),
-		done: make(chan bool),
+		done:    make(chan bool),
 		flusher: flusher,
 	}
 

@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/ozoncp/ocp-calendar-api/app/models"
+	"github.com/ozoncp/ocp-calendar-api/internal/app/models"
 )
 
 func MapIdentifiers(items []models.Calendar) map[uint64]models.Calendar {

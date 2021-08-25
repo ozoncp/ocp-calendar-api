@@ -8,7 +8,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	models "github.com/ozoncp/ocp-calendar-api/app/models"
+	models "github.com/ozoncp/ocp-calendar-api/internal/app/models"
 )
 
 // MockFlusher is a mock of Flusher interface.

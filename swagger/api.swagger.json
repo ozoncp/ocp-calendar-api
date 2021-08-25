@@ -1,0 +1,245 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/ocp-calendar-api/ocp-calendar-api.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/calendar": {
+      "post": {
+        "summary": "Добаляет новый календарь",
+        "operationId": "OcpCalendarApi_CreateCalendarV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ocp_calendar_apiCreateCalendarRequestV1"
+            }
+          }
+        ],
+        "tags": [
+          "OcpCalendarApi"
+        ]
+      }
+    },
+    "/v1/calendar/{Id}": {
+      "get": {
+        "summary": "Возвращает данные календаря по запроешенному ID",
+        "operationId": "OcpCalendarApi_DescribeCalendarV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ocp_calendar_apiDescribeCalendarResponseV1"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "OcpCalendarApi"
+        ]
+      },
+      "delete": {
+        "summary": "Удалеет календарь по запрошенному ID",
+        "operationId": "OcpCalendarApi_RemoveCalendarV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "OcpCalendarApi"
+        ]
+      }
+    },
+    "/v1/calendars": {
+      "get": {
+        "summary": "Вернет список календарей",
+        "operationId": "OcpCalendarApi_ListCalendarsV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ocp_calendar_apiListCalendarResponseV1"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Limit",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "Offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "UserId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "Type",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "OcpCalendarApi"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "ocp_calendar_apiCreateCalendarRequestV1": {
+      "type": "object",
+      "properties": {
+        "UserId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "Type": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "Link": {
+          "type": "string"
+        }
+      }
+    },
+    "ocp_calendar_apiDescribeCalendarResponseV1": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "UserId": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "Type": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "Link": {
+          "type": "string"
+        }
+      }
+    },
+    "ocp_calendar_apiListCalendarResponseV1": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ocp_calendar_apiDescribeCalendarResponseV1"
+          }
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
