@@ -15,7 +15,6 @@ func (a *OcpCalendarApi) DescribeCalendarV1(
 	req *desc.DescribeCalendarRequestV1,
 ) (*desc.DescribeCalendarResponseV1, error) {
 	calendar, err := a.repo.DescribeCalendar(ctx, req.Id)
-	log.Info().Msgf("Describe calendar attempt with ID: %d.", req.Id)
 
 	if errors.Is(err, sql.ErrNoRows) {
 		err = status.Error(codes.NotFound, NotFoundMessage)
@@ -23,6 +22,8 @@ func (a *OcpCalendarApi) DescribeCalendarV1(
 
 		return nil, err
 	}
+
+	log.Info().Msgf("calendar ID: %d description requested", req.Id)
 
 	return &desc.DescribeCalendarResponseV1{
 		Id:     calendar.Id,

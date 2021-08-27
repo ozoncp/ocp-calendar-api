@@ -23,7 +23,7 @@ func (a *OcpCalendarApi) ListCalendarsV1(
 		})
 	}
 
-	log.Info().Msgf("List calendars attempt.")
+	log.Info().Msgf("list calendars requested.")
 
 	return &response, err
 }

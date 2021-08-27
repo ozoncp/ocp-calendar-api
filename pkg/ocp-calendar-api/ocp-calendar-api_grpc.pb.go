@@ -21,7 +21,11 @@ const _ = grpc.SupportPackageIsVersion7
 type OcpCalendarApiClient interface {
 	// Добаляет новый календарь
 	CreateCalendarV1(ctx context.Context, in *CreateCalendarRequestV1, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// Возвращает данные календаря по запроешенному ID
+	// Одновременно добавляет несколько календарей
+	MultiCreateCalendarV1(ctx context.Context, in *MultiCreateCalendarRequestV1, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Обновляем данные календаря
+	UpdateCalendarV1(ctx context.Context, in *UpdateCalendarRequestV1, opts ...grpc.CallOption) (*DescribeCalendarResponseV1, error)
+	// Возвращает данные календаря по запрошенному ID
 	DescribeCalendarV1(ctx context.Context, in *DescribeCalendarRequestV1, opts ...grpc.CallOption) (*DescribeCalendarResponseV1, error)
 	// Вернет список календарей
 	ListCalendarsV1(ctx context.Context, in *ListCalendarRequestV1, opts ...grpc.CallOption) (*ListCalendarResponseV1, error)
@@ -40,6 +44,24 @@ func NewOcpCalendarApiClient(cc grpc.ClientConnInterface) OcpCalendarApiClient {
 func (c *ocpCalendarApiClient) CreateCalendarV1(ctx context.Context, in *CreateCalendarRequestV1, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/ocp_calendar_api.OcpCalendarApi/CreateCalendarV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ocpCalendarApiClient) MultiCreateCalendarV1(ctx context.Context, in *MultiCreateCalendarRequestV1, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/ocp_calendar_api.OcpCalendarApi/MultiCreateCalendarV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ocpCalendarApiClient) UpdateCalendarV1(ctx context.Context, in *UpdateCalendarRequestV1, opts ...grpc.CallOption) (*DescribeCalendarResponseV1, error) {
+	out := new(DescribeCalendarResponseV1)
+	err := c.cc.Invoke(ctx, "/ocp_calendar_api.OcpCalendarApi/UpdateCalendarV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +101,11 @@ func (c *ocpCalendarApiClient) RemoveCalendarV1(ctx context.Context, in *RemoveC
 type OcpCalendarApiServer interface {
 	// Добаляет новый календарь
 	CreateCalendarV1(context.Context, *CreateCalendarRequestV1) (*emptypb.Empty, error)
-	// Возвращает данные календаря по запроешенному ID
+	// Одновременно добавляет несколько календарей
+	MultiCreateCalendarV1(context.Context, *MultiCreateCalendarRequestV1) (*emptypb.Empty, error)
+	// Обновляем данные календаря
+	UpdateCalendarV1(context.Context, *UpdateCalendarRequestV1) (*DescribeCalendarResponseV1, error)
+	// Возвращает данные календаря по запрошенному ID
 	DescribeCalendarV1(context.Context, *DescribeCalendarRequestV1) (*DescribeCalendarResponseV1, error)
 	// Вернет список календарей
 	ListCalendarsV1(context.Context, *ListCalendarRequestV1) (*ListCalendarResponseV1, error)
@@ -94,6 +120,12 @@ type UnimplementedOcpCalendarApiServer struct {
 
 func (UnimplementedOcpCalendarApiServer) CreateCalendarV1(context.Context, *CreateCalendarRequestV1) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCalendarV1 not implemented")
+}
+func (UnimplementedOcpCalendarApiServer) MultiCreateCalendarV1(context.Context, *MultiCreateCalendarRequestV1) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MultiCreateCalendarV1 not implemented")
+}
+func (UnimplementedOcpCalendarApiServer) UpdateCalendarV1(context.Context, *UpdateCalendarRequestV1) (*DescribeCalendarResponseV1, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCalendarV1 not implemented")
 }
 func (UnimplementedOcpCalendarApiServer) DescribeCalendarV1(context.Context, *DescribeCalendarRequestV1) (*DescribeCalendarResponseV1, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeCalendarV1 not implemented")
@@ -131,6 +163,42 @@ func _OcpCalendarApi_CreateCalendarV1_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OcpCalendarApiServer).CreateCalendarV1(ctx, req.(*CreateCalendarRequestV1))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OcpCalendarApi_MultiCreateCalendarV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiCreateCalendarRequestV1)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OcpCalendarApiServer).MultiCreateCalendarV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ocp_calendar_api.OcpCalendarApi/MultiCreateCalendarV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OcpCalendarApiServer).MultiCreateCalendarV1(ctx, req.(*MultiCreateCalendarRequestV1))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OcpCalendarApi_UpdateCalendarV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCalendarRequestV1)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OcpCalendarApiServer).UpdateCalendarV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ocp_calendar_api.OcpCalendarApi/UpdateCalendarV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OcpCalendarApiServer).UpdateCalendarV1(ctx, req.(*UpdateCalendarRequestV1))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -199,6 +267,14 @@ var OcpCalendarApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateCalendarV1",
 			Handler:    _OcpCalendarApi_CreateCalendarV1_Handler,
+		},
+		{
+			MethodName: "MultiCreateCalendarV1",
+			Handler:    _OcpCalendarApi_MultiCreateCalendarV1_Handler,
+		},
+		{
+			MethodName: "UpdateCalendarV1",
+			Handler:    _OcpCalendarApi_UpdateCalendarV1_Handler,
 		},
 		{
 			MethodName: "DescribeCalendarV1",

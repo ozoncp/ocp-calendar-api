@@ -10,4 +10,5 @@ type Repo interface {
 	ListCalendars(ctx context.Context, limit, offset, userId, calendarType uint64) ([]models.Calendar, error)
 	DescribeCalendar(ctx context.Context, calendarId uint64) (models.Calendar, error)
 	RemoveCalendar(ctx context.Context, calendarId uint64) error
+	UpdateCalendar(ctx context.Context, calendar models.Calendar) (models.Calendar, error)
 }

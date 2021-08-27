@@ -17,7 +17,23 @@ service OcpCalendarApi {
         };
     }
 
-    // Возвращает данные календаря по запроешенному ID
+    // Одновременно добавляет несколько календарей
+    rpc MultiCreateCalendarV1(MultiCreateCalendarRequestV1) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/calendars",
+            body: "*",
+        };
+    }
+
+    // Обновляем данные календаря
+    rpc UpdateCalendarV1(UpdateCalendarRequestV1) returns (DescribeCalendarResponseV1) {
+        option (google.api.http)  = {
+            put: "/v1/calendar/{Id}",
+            body: "*",
+        };
+    }
+
+    // Возвращает данные календаря по запрошенному ID
     rpc DescribeCalendarV1(DescribeCalendarRequestV1) returns (DescribeCalendarResponseV1) {
         option (google.api.http) = {
             get: "/v1/calendar/{Id}"
@@ -43,6 +59,18 @@ message CreateCalendarRequestV1 {
     uint64 UserId = 1 [(validate.rules).uint64.gt = 0];
     uint64 Type = 2 [(validate.rules).uint64.gt = 0];
     string Link = 3;
+}
+
+message MultiCreateCalendarRequestV1 {
+    uint64 Id = 1;
+    repeated CreateCalendarRequestV1 Items = 2;
+}
+
+message UpdateCalendarRequestV1 {
+    uint64 Id = 1 [(validate.rules).uint64.gt = 0];
+    uint64 UserId = 2 [(validate.rules).uint64.gt = 0];
+    uint64 Type = 3 [(validate.rules).uint64.gt = 0];
+    string Link = 4;
 }
 
 message DescribeCalendarRequestV1 {

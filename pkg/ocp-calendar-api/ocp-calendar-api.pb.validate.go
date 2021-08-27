@@ -116,6 +116,181 @@ var _ interface {
 	ErrorName() string
 } = CreateCalendarRequestV1ValidationError{}
 
+// Validate checks the field values on MultiCreateCalendarRequestV1 with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *MultiCreateCalendarRequestV1) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Id
+
+	for idx, item := range m.GetItems() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return MultiCreateCalendarRequestV1ValidationError{
+					field:  fmt.Sprintf("Items[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MultiCreateCalendarRequestV1ValidationError is the validation error returned
+// by MultiCreateCalendarRequestV1.Validate if the designated constraints
+// aren't met.
+type MultiCreateCalendarRequestV1ValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MultiCreateCalendarRequestV1ValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MultiCreateCalendarRequestV1ValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MultiCreateCalendarRequestV1ValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MultiCreateCalendarRequestV1ValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MultiCreateCalendarRequestV1ValidationError) ErrorName() string {
+	return "MultiCreateCalendarRequestV1ValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e MultiCreateCalendarRequestV1ValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMultiCreateCalendarRequestV1.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MultiCreateCalendarRequestV1ValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MultiCreateCalendarRequestV1ValidationError{}
+
+// Validate checks the field values on UpdateCalendarRequestV1 with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *UpdateCalendarRequestV1) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetId() <= 0 {
+		return UpdateCalendarRequestV1ValidationError{
+			field:  "Id",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	if m.GetUserId() <= 0 {
+		return UpdateCalendarRequestV1ValidationError{
+			field:  "UserId",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	if m.GetType() <= 0 {
+		return UpdateCalendarRequestV1ValidationError{
+			field:  "Type",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	// no validation rules for Link
+
+	return nil
+}
+
+// UpdateCalendarRequestV1ValidationError is the validation error returned by
+// UpdateCalendarRequestV1.Validate if the designated constraints aren't met.
+type UpdateCalendarRequestV1ValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateCalendarRequestV1ValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateCalendarRequestV1ValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateCalendarRequestV1ValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateCalendarRequestV1ValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateCalendarRequestV1ValidationError) ErrorName() string {
+	return "UpdateCalendarRequestV1ValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateCalendarRequestV1ValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateCalendarRequestV1.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateCalendarRequestV1ValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateCalendarRequestV1ValidationError{}
+
 // Validate checks the field values on DescribeCalendarRequestV1 with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.

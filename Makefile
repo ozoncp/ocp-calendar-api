@@ -36,7 +36,7 @@ vendor-proto: .vendor-proto
 .vendor-proto:
 		mkdir -p vendor.protogen
 		mkdir -p vendor.protogen/api/ocp-calendar-api
-		cp api/ocp-calendar-api/ocp-calendar-api.proto vendor.protogen/api/ocp-calendar-api
+		yes | cp -rf api/ocp-calendar-api/ocp-calendar-api.proto vendor.protogen/api/ocp-calendar-api
 		@if [ ! -d vendor.protogen/google ]; then \
 			git clone https://github.com/googleapis/googleapis vendor.protogen/googleapis &&\
 			mkdir -p  vendor.protogen/google/ &&\
